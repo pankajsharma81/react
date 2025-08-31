@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 
 export default function App() {
   const [todo, setTodo] = useState([
@@ -12,19 +13,21 @@ export default function App() {
   ]);
 
   const {
-    register,                         // 2-way binding
-    handleSubmit,                     // submission
-    reset,                            // form reset
-    formState: { errors },            // error
+    register, // 2-way binding
+    handleSubmit, // submission
+    reset, // form reset
+    formState: { errors }, // error
   } = useForm();
 
-  const submitHandler = (data) => {           // -----> yah event(e) nahi milta, data milta hai
+  const submitHandler = (data) => {
+    // -----> yah event(e) nahi milta, data milta hai
     data.isCompleted = false;
     data.id = nanoid();
 
     const copyTodos = [...todo];
     copyTodos.push(data);
     setTodo(copyTodos);
+    toast.success("task created");
 
     reset();
   };
@@ -33,6 +36,7 @@ export default function App() {
   const deleteHandler = (id) => {
     const filter = todo.filter((todo) => id != todo.id);
     setTodo(filter);
+    toast.error("task deleted");
   };
 
   return (
