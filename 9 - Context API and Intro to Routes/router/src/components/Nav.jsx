@@ -1,12 +1,12 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router"
 
 export default function Nav() {
   return (
     <div className="flex justify-center pt-5 space-x-5 text-xl font-semibold">
-        <Link to="/">Home</Link>
-        <Link to="/product">Product</Link>
-        <Link to="/service">Service</Link>
-        <Link to="/about">About</Link>
+        <NavLink className={({isActive})=>isActive?"text-blue-600" : ""} to="/">Home</NavLink>
+        <NavLink className={({isActive})=>isActive?"text-blue-600" : ""} to="/product">Product</NavLink>
+        <NavLink className={({isActive})=>isActive?"text-blue-600" : ""} to="/service">Service</NavLink>
+        <NavLink className={({isActive})=>isActive?"text-blue-600" : ""} to="/about">About</NavLink>
     </div>
   )
 }
