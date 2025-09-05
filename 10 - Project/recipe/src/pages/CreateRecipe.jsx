@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { RecipeContext } from "../context/RecipeContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const CreateRecipe = () => {
   const {
@@ -10,6 +12,7 @@ const CreateRecipe = () => {
     reset,
     // formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const { recipe, setRecipe } = useContext(RecipeContext);
 
@@ -22,14 +25,16 @@ const CreateRecipe = () => {
     // setRecipe(copyRecipe);
 
     setRecipe([...recipe, data]);
+    toast.success("Recipe Created Successfully")
 
     reset();
+    navigate("/recipes")
   };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="container mx-auto">
       <input
-        {...register("url")}
+        {...register("image")}
         type="url"
         placeholder="Enter Image Url"
         className="block border-b outline-0 px-2 py-3"
@@ -47,17 +52,17 @@ const CreateRecipe = () => {
         className="block border-b outline-0 px-2 py-3"
       />
       <textarea
-        {...register("description")}
+        {...register("desc")}
         placeholder="// Start from here..."
         className="block border-b outline-0 px-2 py-3"
       />
       <textarea
-        {...register("ingredients")}
+        {...register("ingr")}
         placeholder="// Write Ingredients seperated by comma"
         className="block border-b outline-0 px-2 py-3"
       />
       <textarea
-        {...register("instructions")}
+        {...register("inst")}
         placeholder="// Write Instructions seperated by comma"
         className="block border-b outline-0 px-2 py-3"
       />
@@ -65,14 +70,17 @@ const CreateRecipe = () => {
         {...register("category")}
         className="block border-b outline-0 px-2 py-3"
       >
-        <option value="cat-1" className="bg-blue-100 text-black">
-          Category 1
+        <option value="breakfast" className="bg-blue-100 text-black">
+          Breakfast
         </option>
-        <option value="cat-2" className="bg-blue-100 text-black">
-          Category 2
+        <option value="lunch" className="bg-blue-100 text-black">
+          Lunch
         </option>
-        <option value="cat-3" className="bg-blue-100 text-black">
-          Category 3
+        <option value="supper" className="bg-blue-100 text-black">
+          Supper
+        </option>
+        <option value="dinner" className="bg-blue-100 text-black">
+          Dinner
         </option>
       </select>
 
