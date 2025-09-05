@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { RecipeContext } from "../context/RecipeContext";
 import { toast } from "react-toastify";
@@ -38,6 +38,15 @@ const SingleRecipe = () => {
     toast.error("Recipe Deleted!");
     navigate("/recipes");
   };
+
+  
+    useEffect(() => {
+      console.log("useEffect is mounted");
+      // getData()
+      return () => {
+        console.log("useEffect is un mounted");
+      };
+    },[]);
 
   return detailRecipe ? (
     <div className=" flex w-full container mx-auto">
