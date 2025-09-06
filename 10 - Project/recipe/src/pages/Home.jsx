@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 import instance from "../utils/axios";
 
 const Home = () => {
@@ -7,16 +7,18 @@ const Home = () => {
     console.log(product.data);
   };
 
-  useEffect(() => {
-    console.log("useEffect is mounted");
-    getData()
-    return () => {
-      console.log("useEffect is un mounted");
-    };
-  });
+  // useEffect(() => {
+  //   console.log("useEffect is mounted");
+  //   getData()
+  //   return () => {
+  //     console.log("useEffect is un mounted");
+  //   };
+  // });
 
   return (
-    <div>
+    <div className="container mx-auto">
+      Home
+      <br />
       <button onClick={getData}>Get Data</button>
     </div>
   );

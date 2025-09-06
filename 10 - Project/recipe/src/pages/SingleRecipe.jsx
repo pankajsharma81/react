@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { RecipeContext } from "../context/RecipeContext";
 import { toast } from "react-toastify";
@@ -13,11 +13,11 @@ const SingleRecipe = () => {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      title: detailRecipe.title,
-      image: detailRecipe.image,
-      chef: detailRecipe.chef,
-      desc: detailRecipe.desc,
-      category: detailRecipe.category,
+      title: detailRecipe?.title,
+      image: detailRecipe?.image,
+      chef: detailRecipe?.chef,
+      desc: detailRecipe?.desc,
+      category: detailRecipe?.category,
     },
   });
   const navigate = useNavigate();
@@ -28,6 +28,8 @@ const SingleRecipe = () => {
     const copyRecipe = [...recipe];
     copyRecipe[index] = { ...recipe[index], ...data };
     setRecipe(copyRecipe);
+    localStorage.setItem("recipes", JSON.stringify(copyRecipe));
+
     toast.success("Recipe Updated!");
   };
 
@@ -35,29 +37,60 @@ const SingleRecipe = () => {
   const deleteHandler = () => {
     const filter = recipe.filter((item) => item.id != params.id);
     setRecipe(filter);
+    localStorage.setItem("recipes", JSON.stringify(filter));
+
     toast.error("Recipe Deleted!");
     navigate("/recipes");
   };
 
-  
-    useEffect(() => {
-      console.log("useEffect is mounted");
-      // getData()
-      return () => {
-        console.log("useEffect is un mounted");
-      };
-    },[]);
+  const [favourite, setFavourite] = useState(
+    JSON.parse(localStorage.getItem("fav") || "[]")
+  );
+
+  const FavHandler = () => {
+    let copyFav = [...favourite];
+    copyFav.push(detailRecipe);
+    setFavourite(copyFav);
+    localStorage.setItem("fav", JSON.stringify(copyFav));
+  };
+
+  const UnFavHandler = () => {
+    const filterFav = favourite.filter((f) => f.id != detailRecipe?.id);
+    setFavourite(filterFav);
+    localStorage.setItem("fav", JSON.stringify(filterFav));
+  };
+
+  useEffect(() => {
+    console.log("useEffect is mounted");
+    // getData()
+    return () => {
+      console.log("useEffect is un mounted");
+    };
+  }, []);
 
   return detailRecipe ? (
     <div className=" flex w-full container mx-auto">
-      <div className="left w-1/2">
+      <div className="left w-1/2 relative">
+        {favourite.find((data) => data.id == detailRecipe?.id) ? (
+          <i
+            onClick={UnFavHandler}
+            className="right-[5%] absolute text-3xl text-red-400 ri-heart-fill"
+          ></i>
+        ) : (
+          <i
+            onClick={FavHandler}
+            className="right-[5%] absolute text-3xl text-red-400 ri-heart-line"
+          ></i>
+        )}
+
         <h1 className="text-5xl font-bold py-5">{detailRecipe.title}</h1>
         <img
           src={detailRecipe.image}
           alt=""
           className="w-[25vw] bg-white p-2 rounded-xl"
         />
-        {/* <p>{detailRecipe.chef}</p> */}
+        <p>{detailRecipe.chef}</p>
+        <p>{detailRecipe.desc}</p>
       </div>
 
       <div className="right w-1/2">

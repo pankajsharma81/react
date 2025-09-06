@@ -20,15 +20,17 @@ const CreateRecipe = () => {
     console.log(data);
     data.id = nanoid();
 
-    // const copyRecipe = [...recipe];
-    // copyRecipe.push(data);
-    // setRecipe(copyRecipe);
+    const copyRecipe = [...recipe];
+    copyRecipe.push(data);
+    setRecipe(copyRecipe);
+    
+    localStorage.setItem("recipes", JSON.stringify(copyRecipe));
 
-    setRecipe([...recipe, data]);
-    toast.success("Recipe Created Successfully")
+    // setRecipe([...recipe, data]);
+    toast.success("Recipe Created Successfully");
 
     reset();
-    navigate("/recipes")
+    navigate("/recipes");
   };
 
   return (
