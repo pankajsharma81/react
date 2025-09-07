@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-import { getUser } from "./store/userActions";
-import { useDispatch, useSelector } from "react-redux";
+import Nav from "./components/Nav";
+import Mainroutes from "./routes/Mainroutes";
 
 const App = () => {
-  const data = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  console.log(data)
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
-  return <div>App</div>;
+ 
+  return <div>
+    <Nav/>
+    <Mainroutes/>
+  </div>;
 };
 
 export default App;
