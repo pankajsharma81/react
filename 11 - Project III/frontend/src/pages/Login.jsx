@@ -1,12 +1,15 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { asyncLoginUser } from "../store/actions/userActions";
 
 const Login = () => {
   const { register, reset, handleSubmit } = useForm();
+  const dispatch = useDispatch();
 
   const LoginHandler = (user) => {
-
     console.log(user);
+    dispatch(asyncLoginUser(user));
   };
 
   return (
@@ -30,7 +33,10 @@ const Login = () => {
         Login User
       </button>
       <p className="text-white text-2xl">
-        Don't have an account? <Link to="/register" className="text-blue-400">Register</Link>{" "}
+        Don't have an account?{" "}
+        <Link to="/register" className="text-blue-400">
+          Register
+        </Link>{" "}
       </p>
     </form>
   );

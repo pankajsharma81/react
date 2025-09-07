@@ -1,19 +1,25 @@
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { asyncRegisterUser } from "../store/actions/userActions";
 
 const Register = () => {
   const { register, reset, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const RegisterHandler = (user) => {
+  const registerHandler = (user) => {
     user.id = nanoid();
-
-    console.log(user);
+    user.isAdmin = false;
+    console.log(user)
+    dispatch(asyncRegisterUser(user));
+    navigate("/login")
   };
 
   return (
     <form
-      onSubmit={handleSubmit(RegisterHandler)}
+      onSubmit={handleSubmit(registerHandler)}
       className="flex items-center flex-col mt-[12%] gap-3 text-black"
     >
       <input
@@ -38,7 +44,10 @@ const Register = () => {
         Register User
       </button>
       <p className="text-white text-2xl">
-        Already have an account? <Link to="/login" className="text-blue-400">Login</Link>{" "}
+        Already have an account?{" "}
+        <Link to="/login" className="text-blue-400">
+          Login
+        </Link>{" "}
       </p>
     </form>
   );
