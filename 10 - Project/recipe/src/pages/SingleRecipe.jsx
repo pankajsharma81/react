@@ -24,13 +24,14 @@ const SingleRecipe = () => {
 
   // update
   const updateHandler = (data) => {
-    const index = recipe.findIndex((item) => params.id == item.id);
-    const copyRecipe = [...recipe];
-    copyRecipe[index] = { ...recipe[index], ...data };
-    setRecipe(copyRecipe);
-    localStorage.setItem("recipes", JSON.stringify(copyRecipe));
+    // const index = recipe.findIndex((item) => params.id == item.id);
+    // const copyRecipe = [...recipe];
+    // copyRecipe[index] = { ...recipe[index], ...data };
+    // setRecipe(copyRecipe);
+    // localStorage.setItem("recipes", JSON.stringify(copyRecipe));
 
-    toast.success("Recipe Updated!");
+    // toast.success("Recipe Updated!");
+    console.log(data)
   };
 
   // delete
