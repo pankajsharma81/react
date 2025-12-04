@@ -1,14 +1,22 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+
+import { registerUser } from "../store/actions/userActions";
 
 const Register = () => {
   const { register, handleSubmit, reset } = useForm();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const registerHandler = (data) => {
-    data.id = nanoid();
-    data.isAdmin = false;
-    console.log(data);
+  const registerHandler = (user) => {
+    user.id = nanoid();
+    user.isAdmin = false;
+    console.log(user);
+
+    dispatch(registerUser(user));
+    navigate("/login");
   };
 
   return (
@@ -35,7 +43,9 @@ const Register = () => {
         className="border p-2 rounded"
       />
 
-      <button className="bg-blue-500 text-white rounded text-lg">Register</button>
+      <button className="bg-blue-500 text-white rounded text-lg">
+        Register
+      </button>
       <p>
         Already have an account? <Link to="/login">Login</Link>{" "}
       </p>

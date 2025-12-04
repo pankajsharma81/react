@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { loginUser } from "../store/actions/userActions";
 
 
 const Login = () => {
@@ -8,10 +11,13 @@ const Login = () => {
     handleSubmit,
     reset,
   } = useForm();
+  const dispatch = useDispatch();
 
-  const LoginHandler = (data) => {
-    console.log(data);
+  const LoginHandler = (user) => {
+    console.log(user);
+    dispatch(loginUser(user))
   };
+  
   return (
     <form
       className="py-10 px-10 flex flex-col max-w-120 gap-4"
